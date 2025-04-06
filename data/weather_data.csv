@@ -1,0 +1,6 @@
+Region,Month,Rainfall_mm,Temperature_C,Weather_Condition
+North,January,30,22,Cloudy
+South,March,10,34,Sunny
+West,July,120,29,Rainy
+East,October,250,33,Stormy
+Central,December,45,18,Foggy
