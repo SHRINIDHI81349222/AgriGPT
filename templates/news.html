@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="{{ session.language or 'en' }}">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ 'Agriculture News' if language == 'en' else 'விவசாய செய்தி' }} - AgriGPT</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to bottom, #f9fbe7, #e0f7fa);
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .news-card {
+      border-radius: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+      padding: 1.5rem;
+      background-color: #fff;
+    }
+    .news-card h5 {
+      color: #1b5e20;
+    }
+  </style>
+</head>
+<body>
+<div class="container py-4">
+  <a href="{{ url_for('home') }}" class="btn btn-outline-primary mb-3">🔙 {{ 'Back to Home' if language == 'en' else 'முகப்புக்கு திரும்பு' }}</a>
+  <h3 class="text-success mb-4">📰 {{ 'Latest Agriculture News' if language == 'en' else 'சமீபத்திய விவசாய செய்தி' }}</h3>
+
+  <div class="news-card">
+    <h5>🌱 {{ 'Organic Farming on the Rise in Tamil Nadu' if language == 'en' else 'தமிழ்நாட்டில் இயற்கை வேளாண்மை வளர்ச்சி' }}</h5>
+    <p>
+      {{ 'Farmers across southern districts are adopting organic methods to improve soil health and command premium prices in markets.'
+        if language == 'en'
+        else 'தென் மாவட்டங்களில் இயற்கை வேளாண்மையை விவசாயிகள் விரும்புகின்றனர். இது மண் ஆரோக்கியத்தை மேம்படுத்தி விலையை உயர்த்துகிறது.' }}
+    </p>
+  </div>
+
+  <div class="news-card">
+    <h5>🌾 {{ 'Govt to Provide 50% Subsidy for Modern Irrigation Equipment' if language == 'en' else 'நவீன பாசன உபகரணங்களுக்கு 50% மானியம்' }}</h5>
+    <p>
+      {{ 'Central govt announces subsidy for small & marginal farmers to adopt drip and sprinkler irrigation.'
+        if language == 'en'
+        else 'சிறு மற்றும் சராசரி விவசாயிகளுக்கான டிரிப் மற்றும் ஸ்பிரிங்கிளர் பாசன உபகரணங்களுக்கு மத்திய அரசு மானியம் வழங்கும்.' }}
+    </p>
+  </div>
+
+  <div class="news-card">
+    <h5>📈 {{ 'Record Wheat Procurement This Year' if language == 'en' else 'இந்த ஆண்டு சாதனை கோதுமை கொள்முதல்' }}</h5>
+    <p>
+      {{ 'Favorable monsoons and MSP support led to historic procurement numbers.'
+        if language == 'en'
+        else 'மழை மற்றும் குறைந்தபட்ச ஆதரவு விலை காரணமாக கோதுமை கொள்முதல் உயர்வு கண்டுள்ளது.' }}
+    </p>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="{{ language }}">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ text['ask_title'] if language == 'ta' else 'Ask AgriGPT' }}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #e3ffe7, #d9e7ff);
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .query-button {
+      padding: 1rem;
+      font-size: 1.1rem;
+      margin-bottom: 15px;
+      transition: all 0.3s ease-in-out;
+    }
+    .query-button:hover {
+      transform: scale(1.05);
+    }
+    .response-box {
+      background: #fff;
+      padding: 1.5rem;
+      border-left: 6px solid #28a745;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      white-space: pre-line;
+    }
+    textarea {
+      height: 100px;
+      resize: none;
+    }
+  </style>
+  <script>
+    let speech; // Global ref
+  
+    function startDictation() {
+      if (window.hasOwnProperty('webkitSpeechRecognition')) {
+        const recognition = new webkitSpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = "{{ 'ta-IN' if language == 'ta' else 'en-US' }}";
+  
+        recognition.start();
+  
+        recognition.onresult = function(e) {
+          document.getElementById('customQuery').value = e.results[0][0].transcript;
+          recognition.stop();
+        };
+  
+        recognition.onerror = function(e) {
+          recognition.stop();
+        };
+      }
+    }
+  
+    function speakResponse(text) {
+      if ('speechSynthesis' in window) {
+        speech = new SpeechSynthesisUtterance();
+        speech.text = text;
+        speech.lang = "{{ 'ta-IN' if language == 'ta' else 'en-US' }}";
+        window.speechSynthesis.speak(speech);
+      }
+    }
+  
+    function stopSpeech() {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+    }
+  </script>
+  
+</head>
+
+<body>
+  <div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h3 class="text-success">🤖 {{ text['ask_title'] if language == 'ta' else 'Ask AgriGPT' }}, {{ user.name }}</h3>
+      <a href="/home" class="btn btn-outline-secondary">🏠 {{ text['back_home'] if language == 'ta' else 'Back to Home' }}</a>
+    </div>
+
+    <form method="POST">
+      <div class="mb-3">
+        <label for="customQuery" class="form-label">{{ text['ask_input_label'] if language == 'ta' else 'Type your question:' }}</label>
+        <div class="input-group">
+          <textarea class="form-control" name="custom_query" id="customQuery" placeholder="{{ text['ask_placeholder'] if language == 'ta' else 'e.g., What crop should I grow in dry soil?' }}"></textarea>
+          <button class="btn btn-outline-primary" type="button" onclick="startDictation()">🎤</button>
+        </div>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-md-6">
+          <button name="query" value="Suggest crops based on my farm and location." class="btn btn-success w-100 query-button">🌱 {{ text['btn_crop'] if language == 'ta' else 'Best crop for me?' }}</button>
+        </div>
+        <div class="col-md-6">
+          <button name="query" value="Do I need irrigation based on recent weather?" class="btn btn-info w-100 query-button">💧 {{ text['btn_irrigation'] if language == 'ta' else 'Is irrigation needed?' }}</button>
+        </div>
+        <div class="col-md-6">
+          <button name="query" value="Tell me the market prices for my crop." class="btn btn-warning w-100 query-button">📈 {{ text['btn_market'] if language == 'ta' else 'Market prices now?' }}</button>
+        </div>
+        <div class="col-md-6">
+          <button name="query" value="Check how sustainable my farming practices are." class="btn btn-secondary w-100 query-button">🌍 {{ text['btn_sustainability'] if language == 'ta' else 'Am I eco-friendly?' }}</button>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <button type="submit" class="btn btn-primary">🧠 {{ text['submit_btn'] if language == 'ta' else 'Submit Question' }}</button>
+      </div>
+    </form>
+
+    {% if not response and request.method == 'POST' %}
+    <div class="mt-4 text-center text-muted">
+      <div class="spinner-border text-success" role="status">
+        <span class="visually-hidden">Thinking...</span>
+      </div>
+      <p class="mt-2">💭 {{ text['thinking'] if language == 'ta' else 'AgriGPT is analyzing your question...' }}</p>
+    </div>
+    {% elif response %}
+    <div class="mt-4">
+      <div class="response-box">
+        <h5 class="text-success">💡 {{ text['agrigpt_says'] if language == 'ta' else 'AgriGPT Says:' }}</h5>
+        <p>{{ response }}</p>
+        <button onclick="stopSpeech()" class="btn btn-danger mt-2">🛑 Stop Voice</button>
+
+      </div>
+    </div>
+    <script> speakResponse(`{{ response | safe }}`); </script>
+    {% else %}
+    <p class="text-muted mt-3"><em>💭 {{ text['waiting'] if language == 'ta' else 'Waiting for your question...' }}</em></p>
+    {% endif %}
+  </div>
+</body>
+</html>

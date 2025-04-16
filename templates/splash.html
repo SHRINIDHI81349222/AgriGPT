@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="refresh" content="2;url={{ url_for('language') }}">
+  <meta charset="UTF-8">
+  <title>AgriGPT</title>
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #e6ffe6, #d9f2ff);
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .logo {
+      width: 120px;
+      height: 120px;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #2e7d32;
+      margin-top: 20px;
+      animation: fadeInText 2s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: scale(0.5); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes fadeInText {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <img src="{{ url_for('static', filename='logo.png') }}" alt="AgriGPT Logo" class="logo">
+  <h1>🌿 Welcome to AgriGPT</h1>
+</body>
+</html>
