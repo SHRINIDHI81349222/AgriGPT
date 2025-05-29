@@ -50,8 +50,7 @@ no_account: "Don't have an account? Register",
 market_title: "Market Trends",
 market_heading: "📈 Market Trends - Seasonal Insights",
 market_intro: "These crops are in high demand during this season. Leverage the trend to maximize profits!",
-market_note: "*Seasonal suggestions are based on recent regional patterns and summer preferences."
-
+market_note: "*Seasonal suggestions are based on recent regional patterns and summer preferences.",
       news_desc: "State-wise latest agriculture updates"
     },
     ta: {
@@ -72,8 +71,7 @@ register: "பதிவு",
 market_title: "Market Trends",
 market_heading: "📈 Market Trends - Seasonal Insights",
 market_intro: "These crops are in high demand during this season. Leverage the trend to maximize profits!",
-market_note: "*Seasonal suggestions are based on recent regional patterns and summer preferences."
-
+market_note: "*Seasonal suggestions are based on recent regional patterns and summer preferences.",
 name: "பெயர்",
 email: "மின்னஞ்சல்",
 password: "கடவுச்சொல்",
