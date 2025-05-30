@@ -1,5 +1,7 @@
+Flask
+gunicorn
+Flask-Session
 ollama
 requests
 beautifulsoup4
 pandas
-sqlite3
