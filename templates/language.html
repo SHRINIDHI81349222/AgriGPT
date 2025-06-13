@@ -1,90 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Select Language - AgriGPT</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Select Language - AgroVaani</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to right, #4CAF50, #8BC34A); /* Green gradient background */
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #e8f5e9, #a5d6a7);
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      margin: 0;
-      color: #fff;
     }
 
     .container {
-      background-color: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      background-color: #ffffff;
+      padding: 40px 30px;
+      border-radius: 16px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+      width: 90%;
+      max-width: 420px;
       text-align: center;
-      width: 80%;
-      max-width: 400px;
+      animation: fadeIn 1s ease forwards;
+      opacity: 0;
     }
 
     h2 {
-      color: #4CAF50;
-      font-size: 24px;
+      color: #2e7d32;
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #4e4e4e;
+      margin-bottom: 25px;
+      font-size: 16px;
     }
 
     select {
       width: 100%;
-      padding: 10px;
-      margin-top: 15px;
-      border: 2px solid #ccc;
-      border-radius: 5px;
+      padding: 12px;
       font-size: 16px;
+      border-radius: 8px;
+      border: 2px solid #ccc;
+      margin-bottom: 20px;
     }
 
     button {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
       background-color: #4CAF50;
       color: white;
-      padding: 10px 20px;
       border: none;
-      border-radius: 5px;
-      font-size: 16px;
+      border-radius: 8px;
       cursor: pointer;
-      margin-top: 20px;
       transition: background-color 0.3s ease;
     }
 
     button:hover {
-      background-color: #45a049;
-    }
-
-    .language-option {
-      font-size: 16px;
-      margin: 10px 0;
-    }
-
-    /* Optional: Add a fade-in effect for the form */
-    .container {
-      opacity: 0;
-      animation: fadeIn 1s forwards;
+      background-color: #388E3C;
     }
 
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
+      to { opacity: 1; }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>Welcome to AgriGPT</h2>
-    <h2>Please select your language to proceed:</h2>
-    <p class="language-option">Please select your language to proceed:</p>
+    <h2>Welcome to AgroVaani</h2>
+    <p>Select your preferred language to continue</p>
     <form method="POST">
-      <select name="language">
+      <select name="language" required>
+        <option value="">-- Choose Language --</option>
         <option value="en">English</option>
         <option value="ta">தமிழ்</option>
       </select>

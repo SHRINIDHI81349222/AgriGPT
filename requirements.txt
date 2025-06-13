@@ -5,3 +5,5 @@ ollama
 requests
 beautifulsoup4
 pandas
+gTTS
+deep-translator

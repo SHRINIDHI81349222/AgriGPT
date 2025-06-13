@@ -1,62 +1,108 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ language }}">
 <head>
-    <meta charset="UTF-8">
-    <title>Eco-Friendly Products</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background: linear-gradient(to bottom right, #e6f5ec, #d7f3f2);
-            font-family: 'Segoe UI', sans-serif;
-        }
-        .product-card {
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            border-left: 5px solid #28a745;
-            margin: 15px auto;
-            padding: 15px;
-            border-radius: 10px;
-            background-color: #fff;
-            max-width: 600px;
-        }
-        .product-title {
-            font-size: 20px;
-            font-weight: bold;
-            color: #2f7a4c;
-        }
-        .buy-btn {
-            margin-top: 10px;
-        }
-        .back-btn {
-            margin: 20px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Eco-Friendly Farming</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to right, #f5fff5, #e6fff9);
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .eco-card {
+      background: #ffffff;
+      border-left: 5px solid #28a745;
+      padding: 1.5rem;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .eco-title {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+    .eco-desc {
+      font-size: 0.95rem;
+      margin-top: 5px;
+    }
+    .eco-link {
+      display: inline-block;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
-
-    <div class="container mt-4">
-        <a href="/" class="btn btn-outline-primary back-btn">⬅️ Back to Home</a>
-        <h3 class="text-success text-center mb-4">
-            🌿 Personalized Eco-Friendly Products for {{ user_name }}
-        </h3>
-
-        {% if suggestions %}
-            {% for product in suggestions %}
-                <div class="product-card">
-                    <div class="product-title">
-                        {{ product.name_ta if language == 'ta' else product.name_en }}
-                    </div>
-                    <p>
-                        {{ product.desc_ta if language == 'ta' else product.desc_en }}
-                    </p>
-                    <a href="{{ product.link }}" class="btn btn-success buy-btn" target="_blank">
-                        Buy on Amazon
-                    </a>
-                </div>
-            {% endfor %}
-        {% else %}
-            <p class="text-center">No product recommendations available.</p>
-        {% endif %}
+  <div class="container mt-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h4 class="text-success">{{ 'பசுமையான விவசாயம்' if language == 'ta' else 'Eco-Friendly Farming' }}</h4>
+      <a href="/home" class="btn btn-outline-secondary">
+        🏠 {{ 'முகப்புக்கு திரும்பு' if language == 'ta' else 'Back to Home' }}
+      </a>
     </div>
+
+    {% for item in suggestions %}
+    <div class="eco-card">
+      <div class="eco-title">{{ item.name_ta if language == 'ta' else item.name_en }}</div>
+      <div class="eco-desc"><strong>{{ 'விளக்கம்' if language == 'ta' else 'Description:' }}</strong> {{ item.desc_ta if language == 'ta' else item.desc_en }}</div>
+      <div class="eco-desc"><strong>{{ 'பயன்பாடு' if language == 'ta' else 'Usage:' }}</strong> {{ item.use_ta if language == 'ta' else item.use_en }}</div>
+      <a class="eco-link btn btn-sm btn-outline-success" href="{{ item.link }}" target="_blank">{{ 'அமேசானில் பார்க்க' if language == 'ta' else 'View on Amazon' }}</a>
+
+      <!-- 🔊 Voice Button -->
+      <button class="btn btn-sm btn-outline-success mt-2"
+        onclick="speakText(`{{ item.name_ta if language == 'ta' else item.name_en }}. {{ item.desc_ta if language == 'ta' else item.desc_en }}. {{ item.use_ta if language == 'ta' else item.use_en }}`)">
+        🔊 {{ 'கேளுங்கள்' if language == 'ta' else 'Listen' }}
+      </button>
+    </div>
+    {% endfor %}
+  </div>
+
+  <script>
+let tamilVoice = null;
+
+function loadVoicesAndSpeak(text) {
+  const voices = speechSynthesis.getVoices();
+
+  // Try to find a Tamil voice
+  tamilVoice = voices.find(voice => voice.lang === 'ta-IN' || voice.name.toLowerCase().includes('tamil'));
+
+  const utter = new SpeechSynthesisUtterance();
+  utter.text = text;
+
+  if ("{{ language }}" === "ta" && tamilVoice) {
+    utter.voice = tamilVoice;
+    utter.lang = 'ta-IN';
+  } else {
+    utter.lang = 'en-US';
+  }
+
+  speechSynthesis.speak(utter);
+}
+
+// Handle async loading of voices
+if (speechSynthesis.onvoiceschanged !== undefined) {
+  speechSynthesis.onvoiceschanged = () => {
+    // just assign once if needed
+  };
+}
+
+function speakText(text) {
+  fetch('/speak', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ text: text })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.url) {
+      const audio = new Audio(data.url);
+      audio.play();
+    } else {
+      alert("Voice error: " + (data.error || "Unknown"));
+    }
+  });
+}
+</script>
+
 
 </body>
 </html>
