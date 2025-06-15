@@ -4,7 +4,7 @@ import pandas as pd
 from utils.weather_utils import get_weather
 
 # ✅ Set your OpenAI API key
-openai.api_key = os.getenv("")
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # ✅ Load your datasets once
 weather_df = pd.read_csv("data/weather_data.csv")
